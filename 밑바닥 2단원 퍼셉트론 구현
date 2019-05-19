@@ -3,13 +3,13 @@ class Perceptron():
     def __init__(self,thresholds=0.0,eta=0.01,n_iter=10):
         self.thresholds=thresholds
         self.eta=eta
-        self.n_iter
+        self.n_iter=n_iter
         # self라는 변수에 thresholds(임계값),eta(학습률),n_iter(학습횟수)를 디폴트 값으로 각각 0.0,0.01,10으로 지정
     def fit(self,X,y):# X=트레이닝 데이터, y=실제 결과값
-        self.w=np.zeros(1+X.shape[1])#가중치를 X의 입력값개수에 1을 더해서 0으로 이루어진 numpy배열로 생성
+        self.w_=np.zeros(1+X.shape[1])#가중치를 X의 입력값개수에 1을 더해서 0으로 이루어진 numpy배열로 생성
         self.errors_=[]#오류횟수 저장하기 위한 비어있는 변수생성
         for _ in range(self.n_iter):#self.n_iter만큼 반복한다
-            erros=0# 초기 오류를 0으로 지정
+             erros=0# 초기 오류를 0으로 지정
             for xi,target in zip(X,y):#xi,target에 X와y를 각각 하나씩 꺼내서 대입함
                 update=self.eta*(target-self.predict(xi))
                 # 가중치를 조정하기 위해 실제값과 추정값의 차이만큼 학습률을 곱해준 변수를 생성
@@ -22,4 +22,11 @@ class Perceptron():
     def net_input(self,X):
         return np.dot(X,self.w_[1:])+self.w_[0]# 입력값과 가중치를 곱한 총합을 리턴
     def predict(self,X):# 활설화 함수를 구현(계단함수)
-        return np.where(self.net_input(X)>self.thresholds,1,-1)
+        return np.where(self.net_input(X)>self.thresholds,1,-1) 
+        
+if __name__=='__main__':
+    X=np.array([[0,0],[0,1],[1,0],[1,1]])
+    y=np.array([-1,-1,-1,1])
+    ppn=Perceptron()
+    ppn.fit(X,y)
+    print(ppn.errors_)          
