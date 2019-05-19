@@ -8,7 +8,7 @@ style.use('seaborn-talk')
 
 if __name__=='__main__':
     style.use('seaborn-talk')
-    df=pd.read_csv('C:/Users/장세환/Downloads/iris.data',header=None)
+    df=pd.read_csv('E:/for_R_data/iris.data',header=None)
     # read_csv()로 파일 불러오기, pandas의 DataFrame 객체로 변환
     # 파이썬은 R과 다르게 csv파일을 바로 불러오지 못함 pandas 사용해야함 
     y=df.iloc[0:100,4].values # 5열(iris품종 나타내는 문자열값)을 numpy배열로 대입
