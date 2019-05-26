@@ -26,3 +26,6 @@ if __name__=='__main__':
     ppn1.fit(X,y)
     print(ppn1.errors_)
     #-0.4+ (-0.7)x꽃받침길이+1.84 x 꽃잎길이 로 분류
+    
+    
+    
