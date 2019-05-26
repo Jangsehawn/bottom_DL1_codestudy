@@ -1,0 +1,51 @@
+# X*W1+B1=A1, B1=편차 ,W1=가중치 , X=입력값
+X=np.array([1.0,0.5])
+W1=np.array([[0.1,0.3,0.5],[0.2,0.4,0.6]])
+B1=np.array([0.1,0.2,0.3])
+A1=np.dot(X,W1)+B1
+A1
+Z1=relu(A1)
+print(Z1)
+
+#3층 신경망
+def init_network():
+    network={}
+    network['W1']=np.array([[0.1,0.3,0.5],[0.2,0.4,0.6]])
+    network['b1']=np.array([0.1,0.2,0.3])
+    network['W2']=np.array([[0.1,0.4],[0.2,0.5],[0.3,0.6]])
+    network['b2']=np.array([0.1,0.2])
+    network['W3']=np.array([[0.1,0.3],[0.2,0.4]])
+    network['b3']=np.array([0.1,0.2])
+    
+    return network
+def forward(network,x):
+    W1,W2,W3=network['W1'],network['W2'],network['W3']
+    b1,b2,b3=network['b1'],network['b2'],network['b3']
+    
+    a1=np.dot(x,W1)+b1
+    z1=relu(a1)
+    a2=np.dot(z1,W2)+b2
+    z2=relu(a2)
+    a3=np.dot(z2,W3)+b3
+    y=a3
+    
+    return y
+
+network = init_network()
+x=np.array([1.0,0.5])
+y=forward(network,x) 
+print(y)
+
+#소프트맥스 구현->뉴런의 출력값을 정규화 
+# Generalized Linear Model 에서 
+# link function 을 저렇게 잡아야 
+# Multinomial distribution 의 exponential form 의
+# natural parameter 가 나온다.
+# 힉습시킬때는 출력층에 소프트맥스를 사용하나
+# 추론단계에서는 계산에 쓰이는 자원낭비를 줄이기 위해 생략
+def softmax(a):
+    c=np.max(a)#a에서 가장 큰 값
+    exp_a=np.exp(a-c)#오버플로(너무 큰값은 표현하기 힘듬)를 방지하기 위해 최댓값을 빼줌 
+    sum_exp_a=np.sum(exp_a)
+    y=(exp_a-c)/sum_exp_a#0과 1사이로 출력->확률로 해석가능 
+    return y
